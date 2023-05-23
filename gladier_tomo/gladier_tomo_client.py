@@ -8,11 +8,10 @@ from pprint import pprint
 from gladier import GladierBaseClient, generate_flow_definition
 
 ##Import tools that will be used on the flow definition
-from tools.simple_funcx_tool import SimpleTool
 from tools.gather_metadata import GatherMetadata
-
 from gladier_tools.globus.transfer import Transfer
 from gladier_tools.publish import Publishv2
+from gladier_tools.posix.shell_cmd import ShellCmdTool
 
 ##Generate flow based on the collection of `gladier_tools` 
 @generate_flow_definition(
@@ -23,21 +22,21 @@ from gladier_tools.publish import Publishv2
         },
     }
 )
-class Example_Client(GladierBaseClient):
+class Tomo_Client(GladierBaseClient):
     gladier_tools = [
         Transfer,
-        SimpleTool,
+        ShellCmdTool,
         GatherMetadata,
-        Publish
+        Publishv2
     ]
 
 
 ## Main client
 def run_flow(event):
    ##The first step Client instance
-    exampleClient = Example_Client()
-    print('Flow created with ID: ' + exampleClient.get_flow_id())
-    print('https://app.globus.org/flows/' + exampleClient.get_flow_id())
+    tomoClient = Tomo_Client()
+    print('Flow created with ID: ' + tomoClient.get_flow_id())
+    print('https://app.globus.org/flows/' + tomoClient.get_flow_id())
     print('')
 
     ## Flow inputs necessary for each tool on the flow definition.
@@ -58,7 +57,7 @@ def run_flow(event):
             'funcx_endpoint_compute': '4b116d3c-1703-4f8f-9f6f-39921e5864df',
             'funcx_endpoint_non_compute': '4b116d3c-1703-4f8f-9f6f-39921e5864df',
 
-            'pilot':{}
+            'publishv2':{}
         }
     }
     print('Created payload.')
@@ -69,7 +68,7 @@ def run_flow(event):
     client_run_label = 'Gladier SingleTool Example'
 
     ##Flow execution
-    flow_run = exampleClient.run_flow(flow_input=flow_input, label=client_run_label)
+    flow_run = tomoClient.run_flow(flow_input=flow_input, label=client_run_label)
 
     print('Run started with ID: ' + flow_run['action_id'])
     print('https://app.globus.org/runs/' + flow_run['action_id'])
