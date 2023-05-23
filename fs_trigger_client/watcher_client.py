@@ -4,7 +4,7 @@ import os
 import argparse
 
 from tools.folder_watch import FileTrigger
-from full_client import run_flow
+from gladier-tomo_ import run_flow
 # Arg Parsing
 def parse_args():
     parser = argparse.ArgumentParser()

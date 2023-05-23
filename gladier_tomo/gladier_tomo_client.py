@@ -12,7 +12,7 @@ from tools.simple_funcx_tool import SimpleTool
 from tools.gather_metadata import GatherMetadata
 
 from gladier_tools.globus.transfer import Transfer
-from gladier_tools.publish import Publish
+from gladier_tools.publish import Publishv2
 
 ##Generate flow based on the collection of `gladier_tools` 
 @generate_flow_definition(
